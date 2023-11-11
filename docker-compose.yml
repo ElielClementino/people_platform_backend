@@ -17,5 +17,22 @@ services:
         timeout: 5s
         retries: 5
 
+  backend:
+    image: backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    network_mode: "host"
+    command: wait-for-it $POSTGRES_HOST:$POSTGRES_PORT -- bash -c "python manage.py migrate && python manage.py runserver"
+    expose:
+      - "8000"
+    volumes:
+      - ./:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
