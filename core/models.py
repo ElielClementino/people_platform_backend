@@ -19,3 +19,11 @@ class CostCenter(BaseModel):
     description = models.CharField(max_length=100)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     created_at = models.DateField(auto_now_add=True)
+
+
+class Department(BaseModel):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="departments")
+    cost_center = models.ForeignKey(CostCenter, on_delete=models.CASCADE, related_name="departments")
+    name = models.CharField(max_length=100)
+    integration_code = models.CharField(max_length=100)
+
