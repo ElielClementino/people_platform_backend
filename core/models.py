@@ -44,3 +44,6 @@ class Employee(BaseModel):
     entry_date = models.DateField()
     departure_date = models.DateField(null=True, blank=True)
     city = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.company.name} - {self.department}"
