@@ -20,16 +20,19 @@ class BaseModel(models.Model):
         abstract = True
 
     def _get_related_models(self):
-        return [field.related_model for field in self._meta.get_fields() if field.related_model]
+        return [field.related_model for field in self._meta.get_fields() if field.one_to_many]
 
     def _soft_delete_cascading_models(self, related_models):
         if not related_models:
             return
 
         for model in related_models:
-            related_objects = model.objects.filter(**{f"{self._meta.model_name}": self.id})
+            filter_args = {f"{self._meta.model_name}_id": self.id, 'is_active': True}
+            related_objects = model.objects.filter(**filter_args)
+
             for obj in related_objects:
-                obj.delete()
+                obj.is_active = False
+                obj.save()
 
     def delete(self):
         related_models = self._get_related_models()
