@@ -1,8 +1,6 @@
 from rest_framework import viewsets, permissions, status
-from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-import django_filters
 from rest_framework.filters import OrderingFilter, SearchFilter
 
 from core.models import Company

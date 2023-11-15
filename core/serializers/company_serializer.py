@@ -24,7 +24,6 @@ class CompanySerializer(serializers.Serializer):
 
         return instance
 
-
     class Meta:
         model = Company
         fields = ['name', 'cnpj', 'address', 'city', 'state', 'country']

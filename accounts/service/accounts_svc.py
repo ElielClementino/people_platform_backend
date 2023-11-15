@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
+
 def register(user_info):
-    username =  user_info["userInfo"]["username"]
-    email =  user_info["userInfo"]["email"]
-    password =  user_info["userInfo"]["password"]
+    username = user_info["userInfo"]["username"]
+    email = user_info["userInfo"]["email"]
+    password = user_info["userInfo"]["password"]
 
     if User.objects.filter(username=username).exists():
         return JsonResponse({"erro": "nome de usuário já está sendo usado"})

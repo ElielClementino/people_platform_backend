@@ -1,4 +1,3 @@
-import pytest
 from model_bakery import baker
 
 from core.models import Company, Employee, Department

@@ -1,5 +1,6 @@
 from django.db import models
-from .common.managers import BaseModel, BaseModelManager
+from .common.managers import BaseModel
+
 
 class Company(BaseModel):
     name = models.TextField()
