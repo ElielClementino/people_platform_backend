@@ -23,7 +23,3 @@ class CompanySerializer(serializers.Serializer):
         instance.save()
 
         return instance
-
-    class Meta:
-        model = Company
-        fields = ['name', 'cnpj', 'address', 'city', 'state', 'country']

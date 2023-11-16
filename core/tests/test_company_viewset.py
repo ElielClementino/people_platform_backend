@@ -113,7 +113,6 @@ def test_company_viewset_destroy(db):
     client.force_authenticate(user=user)
  
     query_company = Company.objects.all().values()[0]
-
     response = client.delete(f"/companies/{query_company['id']}/")
 
     query_company = Company.objects.all()
@@ -123,7 +122,7 @@ def test_company_viewset_destroy(db):
 
 
 def test_company_viewset_list_not_authenticated(db):
-    companies = baker.make(Company, name=seq("company"), _quantity=2)
+    companie = baker.make(Company, name="company")
 
     user = baker.make(User)
 
@@ -147,7 +146,7 @@ def test_company_simple_list_ordered(db):
 
     assert response.status_code == 200
     response = json.loads(response.content)
-    
+
     assert company2.name == response[0]['name'] # company2.name = Acompany 1º
     assert company3.name == response[1]['name'] # company3.name = Fcompany 2º
     assert company1.name == response[2]['name'] # company1.name = Zcompany 3º
@@ -173,3 +172,17 @@ def test_company_simple_list_search(db):
     assert len(response) == 1
     assert response[0]['name'] == "Zcompany"
 
+
+def test_company_simple_list_pagination(db):
+    PAGE_SIZE = 10
+    baker.make(Company, _quantity=20)
+    user = baker.make(User)
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    response = client.get("/companies/?page=1")
+    assert response.status_code == 200
+    response = json.loads(response.content)
+
+    assert len(response) == PAGE_SIZE

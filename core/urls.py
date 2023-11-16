@@ -6,6 +6,7 @@ from core import viewsets
 
 router = DefaultRouter()
 router.register(r"companies", viewsets.CompanyViewSet, basename="company")
+router.register(r"cost_centers", viewsets.CostCenterViewSet, basename="cost_center")
 
 
 urlpatterns = [
