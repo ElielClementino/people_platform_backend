@@ -89,6 +89,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'people_platform.wsgi.application'
 
+# Frontend Integration
+
+CSRF_TRUSTED_ORIGINS = [
+    os.getenv("FRONTEND_ORIGIN", "http://localhost:3000"),
+]
+
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (os.getenv("FRONTEND_ORIGIN", "http://localhost:3000"),)
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
