@@ -11,7 +11,7 @@ class Company(BaseModel):
     country = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}--{self.cnpj}--{self.state}"
 
 
 class CostCenter(BaseModel):
