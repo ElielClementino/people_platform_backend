@@ -29,7 +29,6 @@ class BaseModel(models.Model):
                 related_models.append(field.related_model)
         return related_models
 
-
     def _soft_delete_cascading_models(self, related_models):
         if not related_models:
             return

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from core.models import CostCenter, Company, Department, Employee
 from core.serializers.company_serializer import CompanySerializer
-from core.serializers.cost_center_serializer import CostCenterSerializer
 from core.serializers.department_serializer import DepartmentSerializer
 
 
@@ -26,8 +25,6 @@ class EmployeeSerializer(serializers.Serializer):
             company_data = validated_data.pop('company')
             department_data = validated_data.pop('department')
             cost_center_data = department_data.pop('cost_center', {})
-
-            company_data_for_cost_center = cost_center_data.pop('company', {})
 
             company_obj = Company.objects.create(**company_data)
             cost_center_data.update(company=company_obj)

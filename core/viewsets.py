@@ -102,7 +102,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
         departments = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(departments)
         serializer = self.get_serializer(page, many=True) if page is not None else self.get_serializer(departments, many=True)
-        
+
         if page is not None:
             return Response(serializer.data)
 
@@ -142,7 +142,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         employees = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(employees)
         serializer = self.get_serializer(page, many=True) if page is not None else self.get_serializer(employees, many=True)
-        
+
         if page is not None:
             return Response(serializer.data)
 
