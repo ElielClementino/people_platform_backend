@@ -19,15 +19,25 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    def _snake_case(self, name):
+        return ''.join(['_' + i.lower() if i.isupper() else i for i in name]).lstrip('_')
+
     def _get_related_models(self):
-        return [field.related_model for field in self._meta.get_fields() if field.one_to_many]
+        related_models = []
+        for field in self._meta.get_fields():
+            if field.one_to_many and field.auto_created and isinstance(field, models.ManyToOneRel):
+                related_models.append(field.related_model)
+        return related_models
+
 
     def _soft_delete_cascading_models(self, related_models):
         if not related_models:
             return
 
         for model in related_models:
-            filter_args = {f"{self._meta.model_name}_id": self.id, 'is_active': True}
+            field_name = self._snake_case(self._meta.model.__name__)
+
+            filter_args = {f"{field_name}_id": self.pk, 'is_active': True}
             related_objects = model.objects.filter(**filter_args)
 
             for obj in related_objects:
